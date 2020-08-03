@@ -21,9 +21,19 @@ func fileFilter(method string, extensions []string, size int, isMulti bool) (str
 		var i int
 		var filters = "Files ("
 		for i = 0; i < size; i++ {
-			filters += `*.` + extensions[i] + `,`
+			filters += `*.` + extensions[i]
+			if i < size-1 {
+				filters += `,`
+			}
 		}
-		filters += ")\x00\x00"
+		filters += ")\x00"
+		for i = 0; i < size; i++ {
+			filters += `*.` + extensions[i]
+			if i < size-1 {
+				filters += `;`
+			}
+		}
+		filters += "\x00\x00"
 		return filters, nil
 	default:
 		return "", errors.New("unknown method")
