@@ -23,7 +23,7 @@ func fileFilter(method string, extensions []string, size int, isMulti bool) (str
 		for i = 0; i < size; i++ {
 			filters += `*.` + extensions[i] + `,`
 		}
-		filters += ")"
+		filters += ")\x00\x00"
 		return filters, nil
 	default:
 		return "", errors.New("unknown method")
